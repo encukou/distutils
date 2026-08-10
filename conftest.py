@@ -48,7 +48,7 @@ def _save_cwd():
 
 @pytest.fixture
 def distutils_managed_tempdir(request):
-    from distutils.tests.compat import py39 as os_helper
+    from test.support import os_helper
 
     self = request.instance
     self.tempdirs = []
@@ -123,9 +123,9 @@ def fake_home(fs, monkeypatch):
 
 @pytest.fixture
 def disable_macos_customization(monkeypatch):
-    from distutils import sysconfig
+    from distutils.compilers.platform import macos
 
-    monkeypatch.setattr(sysconfig, '_customize_macos', lambda: None)
+    monkeypatch.setattr(macos, 'customize_compiler', lambda config_vars: None)
 
 
 @pytest.fixture(autouse=True, scope="session")
